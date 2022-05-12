@@ -13,12 +13,25 @@ function trataErro(erro){
 //     .catch((erro) => trataErro(erro))
 // }
 
+function extraiLinks(texto) {
+    const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
+    const arrayResultados = [];
+    let temp;
+    while((temp = regex.exec(texto)) !== null) {
+      arrayResultados.push({ [temp[1]]: temp[2] })
+    }
+    // regex.exec(texto).forEach(element => {
+    //     arrayResultados.push({ element })
+    // });
+    return arrayResultados;
+  }
+
 //async e await
 async function pegaArquivo(caminhoDoArquivo){
     const encoding = 'utf-8';
     try{
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        console.log(chalk.green(texto));
+        console.log(extraiLinks(texto));
     }catch(erro){
         trataErro(erro)
     }

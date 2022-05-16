@@ -23,15 +23,15 @@ function extraiLinks(texto) {
     // regex.exec(texto).forEach(element => {
     //     arrayResultados.push({ element })
     // });
-    return arrayResultados;
+    return arrayResultados.length === 0 ? 'não há links' : arrayResultados;
   }
 
 //async e await
-async function pegaArquivo(caminhoDoArquivo){
+export default async function pegaArquivo(caminhoDoArquivo){
     const encoding = 'utf-8';
     try{
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        console.log(extraiLinks(texto));
+        return extraiLinks(texto);
     }catch(erro){
         trataErro(erro)
     }
@@ -47,4 +47,6 @@ async function pegaArquivo(caminhoDoArquivo){
 //     })
 // }
 
-pegaArquivo('./arquivos/texto1.md');
+//pegaArquivo('./arquivos/texto1.md');
+
+
